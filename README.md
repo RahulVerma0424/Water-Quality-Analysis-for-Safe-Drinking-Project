@@ -55,7 +55,7 @@ Tested multiple classification algorithms to predict potability:
 
 ---
 
-## 6. Model Evaluation
+## Model Evaluation
 
 ### Evaluation Metrics Used:
 - Accuracy
@@ -72,7 +72,7 @@ Tested multiple classification algorithms to predict potability:
 
 ---
 
-## 7. Conclusion
+## Conclusion
 
 ### What did we learn?
 - Water features like **pH, Organic Carbon, and Trihalomethanes** play an important role in classifying potability.
@@ -83,7 +83,7 @@ Tested multiple classification algorithms to predict potability:
 
 ---
 
-## 🔮 Future Enhancements
+## Future Enhancements
 
 - Use larger, more diverse datasets with regional labeling.
 - Include external factors like **temperature**, **pipe age**, or **water source**.
