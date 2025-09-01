@@ -1,101 +1,142 @@
-# 🚴 Delivery Time Prediction using Machine Learning  
+# 💧 Water Quality Analysis – Potability Prediction
 
 ## 📌 Overview
-This project predicts **food delivery time** based on factors like **weather, traffic, vehicle type, courier experience, and order details**.  
-The goal is to help food delivery companies (like **Swiggy/Zomato**) **estimate accurate delivery times** and **optimize operations**.  
+This project focuses on analyzing **water quality** and predicting whether water is **potable (safe for drinking)** or not using various chemical features.  
+
+Safe drinking water is essential for human health. By building an ML pipeline, this project helps in **identifying unsafe water sources** before human consumption.
 
 ---
 
-## 🎯 Objectives
-- Build and compare machine learning models for **delivery time prediction**.  
-- Analyze key factors influencing delivery delays.  
-- Suggest **business improvements** to reduce delivery time and improve customer satisfaction.  
+## 📂 Dataset
+- File: `water_potability.csv`  
+- Rows: **3,276**  
+- Columns: **10**  
+- Target Variable: **Potability**  
+  - `0` → Non-potable water  
+  - `1` → Potable water  
+
+**Features (Chemicals):**
+- pH  
+- Hardness  
+- Solids  
+- Chloramines  
+- Sulfate  
+- Conductivity  
+- Organic_carbon  
+- Trihalomethanes  
+- Turbidity  
 
 ---
 
-## 🛠️ Tech Stack
-- **Python** 🐍  
-- **Libraries**: Pandas, NumPy, Scikit-Learn, XGBoost, Plotly, Matplotlib, Seaborn  
-- **ML Models**: Linear Regression, Random Forest, XGBoost  
-- **Evaluation Metrics**: R² Score  
+## 🔧 Data Preprocessing
+1. **Handling Missing Values**  
+   - Mean imputation for `pH`, `Sulfate`, and `Trihalomethanes`  
+2. **Removing Duplicates**  
+3. **Standardization** using `StandardScaler`  
+4. **Class Balancing** using **SMOTE (Synthetic Minority Oversampling Technique)**  
 
 ---
 
-## 📂 Project Workflow
-1. **Data Preprocessing**
-   - Handled missing values & categorical encoding (One-Hot Encoding).  
-   - Feature scaling for numerical columns.  
-   - Created derived features like *Experience Groups* and *Time of Day*.  
-
-2. **Exploratory Data Analysis (EDA)**
-   - Weather: Snow/Rain ⬆️ delivery delays.  
-   - Traffic: Heavy traffic ⬆️ delivery time.  
-   - Vehicle Type: Two-wheelers faster than cars.  
-   - Courier Experience: More experienced → faster deliveries.  
-   - Time of Day: Evening peak hours ⬆️ maximum delays.  
-
-3. **Model Training**
-   - Linear Regression  
-   - Random Forest Regressor  
-   - XGBoost Regressor  
-
-4. **Evaluation**
-   - Train/Test splits (80-20, 70-30, etc.)  
-   - K-Fold Cross Validation (5-folds)  
-   - Feature importance analysis  
+## 📊 Exploratory Data Analysis (EDA)
+Key insights generated with **Plotly interactive visualizations**:
+- 🔹 **Top features influencing potability:** pH, Sulfate, Hardness, Chloramines, Solids  
+- 🔹 **Correlation analysis:** No extreme multicollinearity detected  
+- 🔹 **Outlier detection:** Extreme values identified for some chemicals  
+- 🔹 **pH vs Potability:** Potable water is more common in the normal pH range  
+- 🔹 **Feature distributions:** Potable vs Non-potable water shows chemical differences  
 
 ---
 
-## 📊 Results (R² Accuracy %)
-
-| Model              | Setting              | Accuracy % |
-|--------------------|---------------------|------------|
-| **Linear Regression** | 80-20 Split         | **83.40** |
-| Linear Regression   | 70-30 Split         | 83.24      |
-| Linear Regression   | 60-40 Split         | 81.93      |
-| Linear Regression   | 50-50 Split         | 80.62      |
-| Linear Regression   | K-Fold CV (5)       | 77.70      |
-| **Random Forest**   | n_estimators=50     | 76.26      |
-| Random Forest       | n_estimators=500    | 77.14      |
-| Random Forest       | K-Fold CV (5)       | 72.30      |
-| **XGBoost**         | Various Params      | ~71–72     |
-
-✅ **Best Model:** Linear Regression (80-20 split) with **83.4% accuracy**.  
+## 🏗️ Feature Selection
+Based on EDA + Feature Importance (Random Forest):
+- ✅ Selected top 5 features:  
+  **pH, Sulfate, Hardness, Chloramines, Solids**
 
 ---
 
-## 🔑 Key Insights
-- Delivery time is **mostly linear** with features → Linear Regression worked best.  
-- Complex models (Random Forest, XGBoost) did not outperform.  
-- External factors (weather, traffic, peak hours) heavily affect delays.  
+## 🤖 Machine Learning Model
+**Chosen Model:** Random Forest Classifier  
+
+**Pipeline:**
+1. Feature Scaling (StandardScaler)  
+2. Oversampling with SMOTE  
+3. Random Forest with Hyperparameter Tuning  
+4. Evaluation using **20-Fold Cross Validation**
 
 ---
 
-## 🚀 Real-Life Recommendations for Companies
-1. **Weather Forecast Integration** → Use real-time weather data to adjust ETAs.  
-2. **Smart Traffic-Aware Routing** → Use Google Maps APIs for live traffic optimization.  
-3. **Dynamic Vehicle Allocation** → Assign two-wheelers in high-traffic areas.  
-4. **Peak Hour Demand Management** → Increase couriers & offer surge pay during rush hours.  
-5. **Experience-Based Training** → Train new couriers, assign experts for critical orders.  
+## ⚙️ Hyperparameter Tuning
+Optimized using Randomized Search:
+- `n_estimators = 100–300`  
+- `max_depth`  
+- `min_samples_split`  
+- `max_features`  
+- Class weights for imbalance handling  
 
 ---
 
-## ✅ Final Conclusion
-- The **best performing model was Linear Regression** (83.4% accuracy).  
-- Delivery time can be **predicted reliably** using simple models.  
-- Businesses can **improve customer satisfaction** by optimizing traffic handling, weather awareness, and peak-time strategies.  
+## 📈 Model Evaluation
+**Final Model Performance (Random Forest + SMOTE + Hyperparameter Tuning + 20-Fold CV):**
+
+| Metric       | Value   |
+|--------------|---------|
+| Accuracy     | 0.7447  |
+| Precision    | 0.7482  |
+| Recall       | 0.7377  |
+| F1-Score     | 0.7429  |
+| ROC-AUC      | 0.8233  |
+
+✅ **ROC-AUC > 0.82** → strong model performance  
+✅ Balanced precision & recall  
 
 ---
 
-## 📌 Future Improvements
-- Add **real-time GPS data** for accurate route estimation.  
-- Try **Deep Learning models (LSTM, RNN)** for time-series delivery prediction.  
-- Include **order size, restaurant preparation time, and customer distance** for better accuracy.  
+## 🔬 Feature Importance
+Random Forest importance ranking:
+1. pH  
+2. Sulfate  
+3. Hardness  
+4. Chloramines  
+5. Solids  
+
+Helps stakeholders monitor **key chemicals** for safe water supply.  
 
 ---
 
-## 📷 Sample Visualizations
-*(Optional – You can add screenshots of your EDA plots or accuracy bar charts here)*  
+## 📊 K-Fold Cross Validation Results
+| K-Fold | Accuracy | Precision | Recall  | F1-Score | ROC-AUC |
+|--------|----------|-----------|---------|----------|---------|
+| 5      | 0.7297   | 0.7304    | 0.7282  | 0.7293   | 0.8079  |
+| 10     | 0.7370   | 0.7402    | 0.7302  | 0.7352   | 0.8153  |
+| 15     | 0.7382   | 0.7421    | 0.7302  | 0.7361   | 0.8207  |
+| 20     | 0.7447   | 0.7482    | 0.7377  | 0.7429   | 0.8233  |
+
+📌 **Best performance with 20-Fold CV**  
+
+---
+
+## 📌 Final Insights
+- **Top chemicals to monitor:** pH, Sulfate, Hardness, Chloramines, Solids  
+- Regular chemical monitoring ensures safe drinking water  
+- Model assists in **early detection of unsafe water**  
+- Interactive Plotly visualizations make insights accessible  
+
+---
+
+## ✅ Conclusion
+- The **best performing model** is:  
+  **Random Forest + Top 5 Features + SMOTE + Hyperparameter Tuning + 20-Fold CV**  
+- Achieved **Accuracy ~74.5%** and **ROC-AUC 0.8233**  
+- Provides reliable and interpretable predictions for **water potability analysis**  
+
+---
+
+## 📌 Tech Stack
+- Python 🐍  
+- Pandas, NumPy, Scikit-learn  
+- Imbalanced-learn (SMOTE)  
+- Random Forest, Cross Validation  
+- Plotly (EDA & Visualizations)  
 
 ---
 
