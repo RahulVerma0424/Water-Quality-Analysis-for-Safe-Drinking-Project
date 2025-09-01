@@ -100,9 +100,9 @@ The goal is to help food delivery companies (like **Swiggy/Zomato**) **estimate 
 ---
 
 ## 👨‍💻 Author
-- **Your Name**  
-📧 [your_email@example.com]  
-🌐 [Your LinkedIn/GitHub Profile]  
+- **Rahul Verma**  
+📧 [rahulverma69124@gmail.com]  
+🌐 [https://www.linkedin.com/in/rahulverma169/]  
 
 ---
 
